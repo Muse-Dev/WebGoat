@@ -40,12 +40,15 @@ public class DOMCrossSiteScripting extends AssignmentEndpoint {
         UserSessionData userSessionData = getUserSessionData();
         SecureRandom number = new SecureRandom();
         userSessionData.setValue("randValue", String.valueOf(number.nextInt()));
-
+        
         if (param1 == 42 && param2 == 24 && request.getHeader("webgoat-requested-by").equals("dom-xss-vuln")) {
-            return success(this).output("phoneHome Response is " + userSessionData.getValue("randValue").toString()).build();
+            if (userSessionData != null && userSessionData.getValue("randValue") != null){
+                return success(this).output("phoneHome Response is " + userSessionData.getValue("randValue").toString()).build();
+            }
         } else {
             return failed(this).build();
         }
+        
     }
 }
 // something like ... http://localhost:8080/WebGoat/start.mvc#test/testParam=foobar&_someVar=234902384lotslsfjdOf9889080GarbageHere%3Cscript%3Ewebgoat.customjs.phoneHome();%3C%2Fscript%3E--andMoreGarbageHere
