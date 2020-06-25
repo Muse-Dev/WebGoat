@@ -81,7 +81,7 @@ public class IDOREditOtherProfiile extends AssignmentEndpoint {
             return failed(this).feedback("idor.edit.profile.failure4").build();
         }
 
-        if (currentUserProfile.getColor().equals("black") && currentUserProfile.getRole() <= 1) {
+        if ("black".equals(currentUserProfile.getColor()) && currentUserProfile.getRole() <= 1) {
             return success(this)
                     .feedback("idor.edit.profile.success2")
                     .output(userSessionData.getValue("idor-updated-own-profile").toString())
