@@ -42,8 +42,7 @@ public class DOMCrossSiteScripting extends AssignmentEndpoint {
         userSessionData.setValue("randValue", String.valueOf(number.nextInt()));
 
         if (param1 == 42 && param2 == 24 && request.getHeader("webgoat-requested-by").equals("dom-xss-vuln")) {
-            Object randValue = userSessionData.getValue("randValue");
-            return success(this).output("phoneHome Response is " + randValue).build();
+            return success(this).output("phoneHome Response is " + String.valueOf(userSessionData.getValue("randValue"))).build();
         } else {
             return failed(this).build();
         }
